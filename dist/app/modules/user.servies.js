@@ -15,6 +15,11 @@ const createUserDB = (Tuser) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield user_modules_1.usermodule.create(Tuser);
     return result;
 });
+const getallUserDB = () => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield user_modules_1.usermodule.find();
+    return result;
+});
 exports.userservise = {
     createUserDB,
+    getallUserDB,
 };

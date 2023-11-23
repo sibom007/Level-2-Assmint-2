@@ -38,6 +38,10 @@ const userSchema = new mongoose_1.Schema({
     },
 });
 // Middleware
+userSchema.pre("find", function (next) {
+    this.projection({ username: 1, fullName: 1, email: 1, age: 1, address: 1 });
+    next();
+});
 userSchema.post("save", function (doc, next) {
     doc.password = "";
     next();

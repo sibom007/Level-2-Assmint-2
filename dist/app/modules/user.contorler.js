@@ -25,4 +25,17 @@ const createuser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         console.log(error);
     }
 });
-exports.usercontorler = { createuser };
+const getalluser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const result = yield user_servies_1.userservise.getallUserDB();
+        res.status(200).json({
+            success: true,
+            message: "Users fetched successfully!",
+            data: result,
+        });
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
+exports.usercontorler = { createuser, getalluser };
