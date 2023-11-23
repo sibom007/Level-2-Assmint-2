@@ -28,13 +28,14 @@ const userSchema = new Schema<TUser, TuserModel>({
   },
   age: { type: Number, required: true },
   email: { type: String, required: true, unique: true },
-  isActive: { type: Boolean, required: true },
+  isActive: { type: Boolean, required: true, default: false },
   hobbies: { type: [String], required: true },
   address: {
     street: { type: String, required: true },
     city: { type: String, required: true },
     country: { type: String, required: true },
   },
+  isdeleted: { type: Boolean, default: false },
 });
 
 // Middleware;
@@ -53,16 +54,19 @@ userSchema.post("save", function (doc, next) {
   doc.password = "";
   next();
 });
+userSchema.pre("find", function (next) {
+  this.find({ isdeleted: { $ne: true } });
+  next();
+});
+userSchema.pre("findOne", function (next) {
+  this.find({ isdeleted: { $ne: true } });
+  next();
+});
 // isUserExits
 
 userSchema.statics.isUserExits = async function (userId: number) {
   const existingUser = await usermodule.findOne({ userId });
   return existingUser;
 };
-
-// userSchema.methods.isUserExits = async function (userId: number) {
-//   const existingUser = await usermodule.findOne({ userId });
-//   return existingUser;
-// };
 
 export const usermodule = model<TUser, TuserModel>("user", userSchema);

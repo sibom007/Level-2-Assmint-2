@@ -33,9 +33,19 @@ const UpdateSingleUserDB = async (userId: number, user: object) => {
   }
 };
 
+const DeleteSingleUserDB = async (userId: number) => {
+  if (await usermodule.isUserExits(userId)) {
+    const result = await usermodule.updateOne({ userId }, { isdeleted: true });
+    return result;
+  } else {
+    throw new Error();
+  }
+};
+
 export const userservise = {
   createUserDB,
   getallUserDB,
   getSingleuserDB,
   UpdateSingleUserDB,
+  DeleteSingleUserDB,
 };

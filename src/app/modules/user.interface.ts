@@ -17,6 +17,7 @@ export type TUser = {
     city: string;
     country: string;
   };
+  isdeleted: boolean;
 };
 export interface TuserModel extends Model<TUser> {
   isUserExits(userId: number): Promise<TUser | null>;

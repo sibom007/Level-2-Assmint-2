@@ -71,10 +71,32 @@ const UpdateSingleuser = async (req: Request, res: Response) => {
     });
   }
 };
+const DeleteSingleuser = async (req: Request, res: Response) => {
+  try {
+    const id = parseInt(req.params.userId);
+    const userId = id;
+    const result = await userservise.DeleteSingleUserDB(userId);
+    res.status(200).json({
+      success: true,
+      message: "Users deleted successfully!",
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "User not found",
+      error: {
+        code: 404,
+        description: "User not found!",
+      },
+    });
+  }
+};
 
 export const usercontorler = {
   createuser,
   getalluser,
   getSingleuser,
   UpdateSingleuser,
+  DeleteSingleuser,
 };
