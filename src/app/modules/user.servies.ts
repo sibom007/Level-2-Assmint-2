@@ -19,8 +19,23 @@ const getSingleuserDB = async (id: number) => {
   }
 };
 
+const UpdateSingleUserDB = async (userId: number, user: object) => {
+  if (await usermodule.isUserExits(userId)) {
+    const result = await usermodule.updateOne(
+      { userId },
+      {
+        $set: user,
+      }
+    );
+    return result;
+  } else {
+    throw new Error();
+  }
+};
+
 export const userservise = {
   createUserDB,
   getallUserDB,
   getSingleuserDB,
+  UpdateSingleUserDB,
 };

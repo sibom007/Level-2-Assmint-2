@@ -36,7 +36,7 @@ const getSingleuser = async (req: Request, res: Response) => {
       message: "User get successfull",
       data: result,
     });
-  } catch (err: any) {
+  } catch (Error) {
     res.status(500).json({
       success: false,
       message: "User not found",
@@ -48,4 +48,33 @@ const getSingleuser = async (req: Request, res: Response) => {
   }
 };
 
-export const usercontorler = { createuser, getalluser, getSingleuser };
+const UpdateSingleuser = async (req: Request, res: Response) => {
+  try {
+    const id = parseInt(req.params.userId);
+    const userId = id;
+    const user = req.body;
+
+    const result = await userservise.UpdateSingleUserDB(userId, user);
+    res.status(200).json({
+      success: true,
+      message: "Users modifay successfully!",
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "User not found",
+      error: {
+        code: 404,
+        description: "User not found!",
+      },
+    });
+  }
+};
+
+export const usercontorler = {
+  createuser,
+  getalluser,
+  getSingleuser,
+  UpdateSingleuser,
+};

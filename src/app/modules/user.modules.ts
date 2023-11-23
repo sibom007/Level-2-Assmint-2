@@ -38,17 +38,17 @@ const userSchema = new Schema<TUser, TuserModel>({
 });
 
 // Middleware;
-userSchema.pre("find", function (next) {
-  this.projection({
-    userId: 1,
-    username: 1,
-    fullName: 1,
-    email: 1,
-    age: 1,
-    address: 1,
-  });
-  next();
-});
+// userSchema.pre("find", function (next) {
+//   this.projection({
+//     userId: 1,
+//     username: 1,
+//     fullName: 1,
+//     email: 1,
+//     age: 1,
+//     address: 1,
+//   });
+//   next();
+// });
 userSchema.post("save", function (doc, next) {
   doc.password = "";
   next();
