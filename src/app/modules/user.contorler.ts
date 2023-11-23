@@ -27,4 +27,25 @@ const getalluser = async (req: Request, res: Response) => {
   }
 };
 
-export const usercontorler = { createuser,getalluser };
+const getSingleuser = async (req: Request, res: Response) => {
+  try {
+    const usersendId = parseInt(req.params.userId);
+    const result = await userservise.getSingleuserDB(usersendId);
+    res.status(200).json({
+      success: true,
+      message: "User get successfull",
+      data: result,
+    });
+  } catch (err: any) {
+    res.status(500).json({
+      success: false,
+      message: "User not found",
+      error: {
+        code: 404,
+        description: "User not found!",
+      },
+    });
+  }
+};
+
+export const usercontorler = { createuser, getalluser, getSingleuser };

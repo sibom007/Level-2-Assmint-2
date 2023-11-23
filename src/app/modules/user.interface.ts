@@ -1,3 +1,5 @@
+import { Model } from "mongoose";
+
 export type TUser = {
   userId: number;
   username: string;
@@ -16,3 +18,6 @@ export type TUser = {
     country: string;
   };
 };
+export interface TuserModel extends Model<TUser> {
+  isUserExits(userId: number): Promise<TUser | null>;
+}

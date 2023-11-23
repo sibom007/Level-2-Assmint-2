@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
-import { TUser } from "./user.interface";
+import { TUser, TuserModel } from "./user.interface";
 
-const userSchema = new Schema<TUser>({
+const userSchema = new Schema<TUser, TuserModel>({
   userId: { type: Number, require: true, unique: true },
   username: {
     type: String,
@@ -37,14 +37,32 @@ const userSchema = new Schema<TUser>({
   },
 });
 
-// Middleware
+// Middleware;
 userSchema.pre("find", function (next) {
-  this.projection({ username: 1, fullName: 1, email: 1, age: 1, address: 1 });
+  this.projection({
+    userId: 1,
+    username: 1,
+    fullName: 1,
+    email: 1,
+    age: 1,
+    address: 1,
+  });
   next();
 });
 userSchema.post("save", function (doc, next) {
   doc.password = "";
   next();
 });
+// isUserExits
 
-export const usermodule = model<Schema>("user", userSchema);
+userSchema.statics.isUserExits = async function (userId: number) {
+  const existingUser = await usermodule.findOne({ userId });
+  return existingUser;
+};
+
+// userSchema.methods.isUserExits = async function (userId: number) {
+//   const existingUser = await usermodule.findOne({ userId });
+//   return existingUser;
+// };
+
+export const usermodule = model<TUser, TuserModel>("user", userSchema);
