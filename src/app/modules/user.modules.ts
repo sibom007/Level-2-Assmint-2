@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { TUser, Torder, TuserModel, TuserOrderModel } from "./user.interface";
+import { TUser, TuserModel } from "./user.interface";
 
 const userSchema = new Schema<TUser, TuserModel>({
   userId: { type: Number, require: true, unique: true },
