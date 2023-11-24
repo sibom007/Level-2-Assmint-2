@@ -19,6 +19,16 @@ export type TUser = {
   };
   isdeleted: boolean;
 };
+
+export type Torder = {
+  productName: string;
+  price: number;
+  quantity: number;
+};
+
 export interface TuserModel extends Model<TUser> {
   isUserExits(userId: number): Promise<TUser | null>;
+  isUserOrderExits(orders: []): Promise<Torder | null>;
 }
+
+// export interface TuserOrderModel extends Model<Torder> {}

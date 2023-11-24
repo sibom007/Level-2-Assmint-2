@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { TUser, TuserModel } from "./user.interface";
+import { TUser, Torder, TuserModel, TuserOrderModel } from "./user.interface";
 
 const userSchema = new Schema<TUser, TuserModel>({
   userId: { type: Number, require: true, unique: true },
@@ -38,18 +38,24 @@ const userSchema = new Schema<TUser, TuserModel>({
   isdeleted: { type: Boolean, default: false },
 });
 
+const orderSchema = new Schema<Torder, TuserOrderModel>({
+  productName: String,
+  price: Number,
+  quantity: Number,
+});
+
 // Middleware;
-// userSchema.pre("find", function (next) {
-//   this.projection({
-//     userId: 1,
-//     username: 1,
-//     fullName: 1,
-//     email: 1,
-//     age: 1,
-//     address: 1,
-//   });
-//   next();
-// });
+userSchema.pre("find", function (next) {
+  this.projection({
+    userId: 1,
+    username: 1,
+    fullName: 1,
+    email: 1,
+    age: 1,
+    address: 1,
+  });
+  next();
+});
 userSchema.post("save", function (doc, next) {
   doc.password = "";
   next();
@@ -62,10 +68,14 @@ userSchema.pre("findOne", function (next) {
   this.find({ isdeleted: { $ne: true } });
   next();
 });
-// isUserExits
 
+// isUserExits
 userSchema.statics.isUserExits = async function (userId: number) {
   const existingUser = await usermodule.findOne({ userId });
+  return existingUser;
+};
+userSchema.statics.isUserOrderExits = async function (order: []) {
+  const existingUser = await usermodule.findOne({ order });
   return existingUser;
 };
 
