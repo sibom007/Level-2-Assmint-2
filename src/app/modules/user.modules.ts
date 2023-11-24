@@ -38,11 +38,11 @@ const userSchema = new Schema<TUser, TuserModel>({
   isdeleted: { type: Boolean, default: false },
 });
 
-const orderSchema = new Schema<Torder, TuserOrderModel>({
-  productName: String,
-  price: Number,
-  quantity: Number,
-});
+// const orderSchema = new Schema<Torder, TuserOrderModel>({
+//   productName: String,
+//   price: Number,
+//   quantity: Number,
+// });
 
 // Middleware;
 userSchema.pre("find", function (next) {
@@ -72,10 +72,6 @@ userSchema.pre("findOne", function (next) {
 // isUserExits
 userSchema.statics.isUserExits = async function (userId: number) {
   const existingUser = await usermodule.findOne({ userId });
-  return existingUser;
-};
-userSchema.statics.isUserOrderExits = async function (order: []) {
-  const existingUser = await usermodule.findOne({ order });
   return existingUser;
 };
 

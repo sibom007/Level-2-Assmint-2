@@ -28,7 +28,6 @@ export type Torder = {
 
 export interface TuserModel extends Model<TUser> {
   isUserExits(userId: number): Promise<TUser | null>;
-  isUserOrderExits(orders: []): Promise<Torder | null>;
 }
 
 // export interface TuserOrderModel extends Model<Torder> {}
