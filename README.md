@@ -33,4 +33,22 @@ zod - ^3.22.4
 eslint - ^8.54.0
 typescript - ^5.3.2
 
-## LIVE URL : **assmient-2.vercel.app**
+## LIVE URL : assmient-2.vercel.app
+
+## create-user-URL:https://assmient-2.vercel.app/api/users
+
+## All-user-URL:https://assmient-2.vercel.app/api/users
+
+## Single-user-URL:https://assmient-2.vercel.app/api/users/userId
+
+##Update-user-URL:https://assmient-2.vercel.app/api/users/userId
+
+##Delete-user-URL:https://assmient-2.vercel.app/api/users/userId
+
+##Add-orders-URL:https://assmient-2.vercel.app/api/users/userId/orders
+
+##Single-orders-URL:https://assmient-2.vercel.app/api/users/userId/orders
+
+##Total-price-orders-URL:https://assmient-2.vercel.app/api/users/userId/orders/total-price
+
+
