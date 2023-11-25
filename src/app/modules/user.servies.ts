@@ -39,20 +39,30 @@ const DeleteSingleUserDB = async (userId: number) => {
 };
 
 const OtheraddUserDB = async function (userId: number, order: object) {
+  console.log(userId);
   if (await usermodule.isUserExits(userId)) {
     try {
       const user = await usermodule.findOne({ userId });
       if (user) {
-        const updateQuery = user.orders
-          ? { $push: { orders: order } }
-          : { $set: { orders: [order] } };
-
-        const result = await usermodule.updateOne(
-          { userId },
-          { $set: updateQuery },
-          { upsert: true }
-        );
-        return result;
+        if (user.orders) {
+          const result = await usermodule.updateOne(
+            { userId },
+            {
+              $push: { orders: order },
+            },
+            { upsert: true }
+          );
+          return result;
+        } else {
+          const result = await usermodule.updateOne(
+            { userId },
+            {
+              $set: { orders: [order] },
+            },
+            { upsert: true }
+          );
+          return result;
+        }
       }
     } catch (error) {
       throw new Error();
@@ -68,12 +78,31 @@ const getSingleuserorderDB = async (id: number) => {
     const user = await usermodule.findOne({ userId });
     if (user) {
       const result = user.orders;
-      console.log(result);
       return result;
     } else {
       throw new Error();
     }
-    // return result;
+  } else {
+    throw new Error();
+  }
+};
+const getSingleuserorderTotleDB = async (id: number) => {
+  const userId = id;
+  if (await usermodule.isUserExits(userId)) {
+    const user = await usermodule.findOne({ userId });
+    if (user) {
+      let totalPrice = 0;
+      if (user.orders) {
+        user.orders.forEach((order) => {
+          totalPrice += order.price * order.quantity;
+        });
+      } else {
+        throw new Error();
+      }
+      return totalPrice;
+    } else {
+      throw new Error();
+    }
   } else {
     throw new Error();
   }
@@ -87,4 +116,5 @@ export const userservise = {
   DeleteSingleUserDB,
   OtheraddUserDB,
   getSingleuserorderDB,
+  getSingleuserorderTotleDB,
 };

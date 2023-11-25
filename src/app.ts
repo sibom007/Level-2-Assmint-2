@@ -6,7 +6,7 @@ const app: Application = express();
 app.use(express.json());
 app.use(cors());
 
-app.use("/api/user", userRoute);
+app.use("/api/users", userRoute);
 
 // app.use("/api/v1/student", studentroute);
 

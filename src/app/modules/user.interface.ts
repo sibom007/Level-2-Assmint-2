@@ -12,13 +12,11 @@ export type TUser = {
   email: string;
   isActive: boolean;
   hobbies: string[];
-  orders?: [
-    {
-      productName: string;
-      price: number;
-      quantity: number;
-    }
-  ];
+  orders?: {
+    productName: string;
+    price: number;
+    quantity: number;
+  }[];
   address: {
     street: string;
     city: string;
