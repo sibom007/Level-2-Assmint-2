@@ -38,59 +38,59 @@ const DeleteSingleUserDB = async (userId: number) => {
   }
 };
 
-// const OtheraddUserDB = async function (userId: number, order: object) {
-//   if (await usermodule.isUserExits(userId)) {
-//     try {
-//       const user = await usermodule.findOne({ userId });
-//       if (user) {
-//         if (user.orders) {
-//           const result = await usermodule.updateOne(
-//             { userId },
-//             { $push: { orders: order } }
-//           );
-//           return result;
-//         } else {
-//           const result = await usermodule.updateOne(
-//             { userId },
-//             {
-//               $set: {
-//                 orders: [order],
-//               },
-//             },
-//             { upsert: true }
-//           );
-//           console.log(result, "heool");
-//           return result;
-//         }
-//       }
-//     } catch (error) {
-//       console.error("Error adding order:", error);
-//     }
+const OtheraddUserDB = async function (userId: number, order: object) {
+  if (await usermodule.isUserExits(userId)) {
+    try {
+      const user = await usermodule.findOne({ userId });
+      if (user) {
+        if (user.orders) {
+          const result = await usermodule.updateOne(
+            { userId },
+            { $push: { orders: order } }
+          );
+          return result;
+        } else {
+          const result = await usermodule.updateOne(
+            { userId },
+            {
+              $set: {
+                orders: [order],
+              },
+            },
+            { upsert: true }
+          );
+          console.log(result, "heool");
+          return result;
+        }
+      }
+    } catch (error) {
+      console.error("Error adding order:", error);
+    }
 
-//     // try {
-//     //   const user = await usermodule.findOne({ userId });
-//     //   console.log(order);
-//     //   if (user) {
-//     //     const updateQuery = user.orders
-//     //       ? { $push: { orders: order } }
-//     //       : { $set: { orders: [order] } };
+    // try {
+    //   const user = await usermodule.findOne({ userId });
+    //   console.log(user);
+    //   if (user) {
+    //     const updateQuery = user.orders
+    //       ? { $push: { orders: order } }
+    //       : { $set: { orders: [order] } };
 
-//     //     const result = await usermodule.updateOne(
-//     //       { userId },
-//     //       { $set: updateQuery },
-//     //       { upsert: true }
-//     //     );
+    //     const result = await usermodule.updateOne(
+    //       { userId },
+    //       { $set: updateQuery },
+    //       { upsert: true }
+    //     );
 
-//     //     console.log(result, "hello");
-//     //     return result;
-//     //   }
-//     // } catch (error) {
-//     //   console.error("Error adding order:", error);
-//     // }
-//   } else {
-//     throw new Error();
-//   }
-// };
+    //     console.log(result, "hello");
+    //     return result;
+    //   }
+    // } catch (error) {
+    //   console.error("Error adding order:", error);
+    // }
+  } else {
+    throw new Error();
+  }
+};
 
 export const userservise = {
   createUserDB,
@@ -98,5 +98,5 @@ export const userservise = {
   getSingleuserDB,
   UpdateSingleUserDB,
   DeleteSingleUserDB,
-  // OtheraddUserDB,
+  OtheraddUserDB,
 };

@@ -94,29 +94,29 @@ const DeleteSingleuser = async (req: Request, res: Response) => {
   }
 };
 
-// const Orderuser = async (req: Request, res: Response) => {
-//   try {
-//     const id = parseInt(req.params.userId);
-//     const userId = id;
-//     const order = req.body;
-//     const result = await userservise.OtheraddUserDB(userId, order);
-//     console.log(result);
-//     res.status(200).json({
-//       success: true,
-//       message: "Users add order successfully!",
-//       data: result,
-//     });
-//   } catch (error) {
-//     res.status(500).json({
-//       success: false,
-//       message: "User not found",
-//       error: {
-//         code: 404,
-//         description: "User not found!",
-//       },
-//     });
-//   }
-// };
+const Orderuser = async (req: Request, res: Response) => {
+  try {
+    const id = parseInt(req.params.userId);
+    const userId = id;
+    const order = req.body;
+    const result = await userservise.OtheraddUserDB(userId, order);
+    console.log(result);
+    res.status(200).json({
+      success: true,
+      message: "Users add order successfully!",
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "User not found",
+      error: {
+        code: 404,
+        description: "User not found!",
+      },
+    });
+  }
+};
 
 export const usercontorler = {
   createuser,
@@ -124,5 +124,5 @@ export const usercontorler = {
   getSingleuser,
   UpdateSingleuser,
   DeleteSingleuser,
-  // Orderuser,
+  Orderuser,
 };

@@ -30,6 +30,13 @@ const userSchema = new Schema<TUser, TuserModel>({
   email: { type: String, required: true, unique: true },
   isActive: { type: Boolean, required: true, default: false },
   hobbies: { type: [String], required: true },
+  orders: [
+    {
+      productName: { type: String, required: true },
+      price: { type: Number, required: true },
+      quantity: { type: Number, required: true },
+    },
+  ],
   address: {
     street: { type: String, required: true },
     city: { type: String, required: true },
@@ -37,12 +44,6 @@ const userSchema = new Schema<TUser, TuserModel>({
   },
   isdeleted: { type: Boolean, default: false },
 });
-
-// const orderSchema = new Schema<Torder, TuserOrderModel>({
-//   productName: String,
-//   price: Number,
-//   quantity: Number,
-// });
 
 // Middleware;
 userSchema.pre("find", function (next) {

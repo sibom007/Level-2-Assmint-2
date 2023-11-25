@@ -6,5 +6,5 @@ route.get("/", usercontorler.getalluser);
 route.get("/:userId", usercontorler.getSingleuser);
 route.put("/:userId", usercontorler.UpdateSingleuser);
 route.delete("/:userId", usercontorler.DeleteSingleuser);
-// route.put("/:userId/order", usercontorler.Orderuser);
+route.put("/:userId/order", usercontorler.Orderuser);
 export const userRoute = route;
