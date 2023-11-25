@@ -43,50 +43,37 @@ const OtheraddUserDB = async function (userId: number, order: object) {
     try {
       const user = await usermodule.findOne({ userId });
       if (user) {
-        if (user.orders) {
-          const result = await usermodule.updateOne(
-            { userId },
-            { $push: { orders: order } }
-          );
-          return result;
-        } else {
-          const result = await usermodule.updateOne(
-            { userId },
-            {
-              $set: {
-                orders: [order],
-              },
-            },
-            { upsert: true }
-          );
-          console.log(result, "heool");
-          return result;
-        }
+        const updateQuery = user.orders
+          ? { $push: { orders: order } }
+          : { $set: { orders: [order] } };
+
+        const result = await usermodule.updateOne(
+          { userId },
+          { $set: updateQuery },
+          { upsert: true }
+        );
+        return result;
       }
     } catch (error) {
-      console.error("Error adding order:", error);
+      throw new Error();
     }
+  } else {
+    throw new Error();
+  }
+};
 
-    // try {
-    //   const user = await usermodule.findOne({ userId });
-    //   console.log(user);
-    //   if (user) {
-    //     const updateQuery = user.orders
-    //       ? { $push: { orders: order } }
-    //       : { $set: { orders: [order] } };
-
-    //     const result = await usermodule.updateOne(
-    //       { userId },
-    //       { $set: updateQuery },
-    //       { upsert: true }
-    //     );
-
-    //     console.log(result, "hello");
-    //     return result;
-    //   }
-    // } catch (error) {
-    //   console.error("Error adding order:", error);
-    // }
+const getSingleuserorderDB = async (id: number) => {
+  const userId = id;
+  if (await usermodule.isUserExits(userId)) {
+    const user = await usermodule.findOne({ userId });
+    if (user) {
+      const result = user.orders;
+      console.log(result);
+      return result;
+    } else {
+      throw new Error();
+    }
+    // return result;
   } else {
     throw new Error();
   }
@@ -99,4 +86,5 @@ export const userservise = {
   UpdateSingleUserDB,
   DeleteSingleUserDB,
   OtheraddUserDB,
+  getSingleuserorderDB,
 };

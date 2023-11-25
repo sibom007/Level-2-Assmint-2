@@ -118,6 +118,27 @@ const Orderuser = async (req: Request, res: Response) => {
   }
 };
 
+const getSingleuserorder = async (req: Request, res: Response) => {
+  try {
+    const usersendId = parseInt(req.params.userId);
+    const result = await userservise.getSingleuserorderDB(usersendId);
+    res.status(200).json({
+      success: true,
+      message: "User order get successfull",
+      data: result,
+    });
+  } catch (Error) {
+    res.status(500).json({
+      success: false,
+      message: "User not found",
+      error: {
+        code: 404,
+        description: "User not found!",
+      },
+    });
+  }
+};
+
 export const usercontorler = {
   createuser,
   getalluser,
@@ -125,4 +146,5 @@ export const usercontorler = {
   UpdateSingleuser,
   DeleteSingleuser,
   Orderuser,
+  getSingleuserorder,
 };
