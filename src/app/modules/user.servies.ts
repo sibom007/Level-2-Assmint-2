@@ -3,6 +3,7 @@ import { usermodule } from "./user.modules";
 
 const createUserDB = async (Tuser: TUser) => {
   const result = await usermodule.create(Tuser);
+  console.log();
   return result;
 };
 const getallUserDB = async () => {
@@ -22,7 +23,6 @@ const getSingleuserDB = async (id: number) => {
 const UpdateSingleUserDB = async (userId: number, user: object) => {
   if (await usermodule.isUserExits(userId)) {
     const result = await usermodule.updateOne({ userId }, { $set: user });
-    console.log(result);
     return result;
   } else {
     throw new Error();
@@ -39,7 +39,6 @@ const DeleteSingleUserDB = async (userId: number) => {
 };
 
 const OtheraddUserDB = async function (userId: number, order: object) {
-  console.log(userId);
   if (await usermodule.isUserExits(userId)) {
     try {
       const user = await usermodule.findOne({ userId });

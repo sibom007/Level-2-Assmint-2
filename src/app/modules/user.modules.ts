@@ -5,25 +5,21 @@ const userSchema = new Schema<TUser, TuserModel>({
   userId: { type: Number, require: true, unique: true },
   username: {
     type: String,
-    maxlength: [30, "only add 20 word"],
     required: true,
   },
   password: {
     type: String,
     required: true,
     unique: true,
-    maxlength: [100, "not more then 100 Character"],
   },
   fullName: {
     firstName: {
       type: String,
       required: true,
-      maxlength: [30, "only add 30 word"],
     },
     lastName: {
       type: String,
       required: true,
-      maxlength: [30, "only add 20 word"],
     },
   },
   age: { type: Number, required: true },

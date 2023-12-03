@@ -4,7 +4,7 @@ import ZodUserSchema from "./user.validation";
 
 const createuser = async (req: Request, res: Response) => {
   try {
-    const { user } = req.body;
+    const user = req.body;
     const zodvalidationuser = ZodUserSchema.parse(user);
     const result = await userservise.createUserDB(zodvalidationuser);
     res.status(200).json({

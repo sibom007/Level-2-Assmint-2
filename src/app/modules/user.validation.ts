@@ -24,7 +24,7 @@ const ZodUserSchema = z.object({
   email: z.string().email(),
   isActive: z.boolean(),
   hobbies: z.array(z.string()),
-  orders: z.array(orderSchema),
+  orders: z.array(orderSchema).optional(),
   address: addressSchema,
   isdeleted: z.boolean(),
 });
