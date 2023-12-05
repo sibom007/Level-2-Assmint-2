@@ -92,18 +92,24 @@ userSchema.pre("findOne", function (next) {
   next();
 });
 
-userSchema.pre("updateOne", async function (next) {
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const update = this.getUpdate();
-  if (update?.$set && update.$set.password) {
-    // hashing password and save into DB
-    update.$set.password = await bcrypt.hash(
-      update.$set.password,
-      Number(config.bcrypt_salt_rounds)
-    );
-    next();
-  }
-});
+// userSchema.pre("updateOne", async function (next) {
+//   // eslint-disable-next-line @typescript-eslint/no-this-alias
+//   const update = this.getUpdate();
+//   if (update) {
+//     if (update?.$set && update.$set.password) {
+//       try {
+//         update.$set.password = await bcrypt.hash(
+//           update.$set.password,
+//           Number(config.bcrypt_salt_rounds)
+//         );
+//         next();
+//       } catch (error) {
+//         console.log(error);
+//       }
+//       // hashing password and save into DB
+//     }
+//   }
+// });
 
 // isUserExits
 userSchema.statics.isUserExits = async function (userId: number) {
