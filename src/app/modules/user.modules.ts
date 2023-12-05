@@ -1,5 +1,7 @@
 import { Schema, model } from "mongoose";
 import { TUser, TuserModel } from "./user.interface";
+import config from "../config";
+import bcrypt from "bcrypt";
 
 const userSchema = new Schema<TUser, TuserModel>({
   userId: { type: Number, require: true, unique: true },
@@ -53,10 +55,34 @@ userSchema.pre("find", function (next) {
   });
   next();
 });
+// userSchema.pre("findOne", function (next) {
+//   this.projection({
+//     userId: 1,
+//     username: 1,
+//     fullName: 1,
+//     email: 1,
+//     age: 1,
+//     address: 1,
+//   });
+//   next();
+// });
+
 userSchema.post("save", function (doc, next) {
   doc.password = "";
   next();
 });
+
+userSchema.pre("save", async function (next) {
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
+  const user = this; // doc
+  // hashing password and save into DB
+  user.password = await bcrypt.hash(
+    user.password,
+    Number(config.bcrypt_salt_rounds)
+  );
+  next();
+});
+
 userSchema.pre("find", function (next) {
   this.find({ isdeleted: { $ne: true } });
   next();
@@ -64,6 +90,19 @@ userSchema.pre("find", function (next) {
 userSchema.pre("findOne", function (next) {
   this.find({ isdeleted: { $ne: true } });
   next();
+});
+
+userSchema.pre("updateOne", async function (next) {
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
+  const update = this.getUpdate();
+  if (update?.$set && update.$set.password) {
+    // hashing password and save into DB
+    update.$set.password = await bcrypt.hash(
+      update.$set.password,
+      Number(config.bcrypt_salt_rounds)
+    );
+    next();
+  }
 });
 
 // isUserExits

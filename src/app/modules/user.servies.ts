@@ -3,7 +3,7 @@ import { usermodule } from "./user.modules";
 
 const createUserDB = async (Tuser: TUser) => {
   const result = await usermodule.create(Tuser);
-  console.log();
+
   return result;
 };
 const getallUserDB = async () => {
@@ -13,7 +13,20 @@ const getallUserDB = async () => {
 const getSingleuserDB = async (id: number) => {
   const userId = id;
   if (await usermodule.isUserExits(userId)) {
-    const result = await usermodule.findOne({ userId });
+    // const result = await usermodule.findOne({ userId });
+    const result = await usermodule.aggregate([
+      { $match: { userId } },
+      {
+        $project: {
+          userId: 1,
+          username: 1,
+          fullName: 1,
+          email: 1,
+          age: 1,
+          address: 1,
+        },
+      },
+    ]);
     return result;
   } else {
     throw new Error();
@@ -23,7 +36,21 @@ const getSingleuserDB = async (id: number) => {
 const UpdateSingleUserDB = async (userId: number, user: object) => {
   if (await usermodule.isUserExits(userId)) {
     const result = await usermodule.updateOne({ userId }, { $set: user });
-    return result;
+
+    const updateresult = await usermodule.aggregate([
+      { $match: { userId } },
+      {
+        $project: {
+          userId: 1,
+          username: 1,
+          fullName: 1,
+          email: 1,
+          age: 1,
+          address: 1,
+        },
+      },
+    ]);
+    return { result, updateresult };
   } else {
     throw new Error();
   }
