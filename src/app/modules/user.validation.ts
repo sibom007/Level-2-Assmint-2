@@ -8,25 +8,25 @@ const addressSchema = z.object({
 
 const orderSchema = z.object({
   productName: z.string(),
-  price: z.number().min(0),
-  quantity: z.number().min(1),
+  price: z.number(),
+  quantity: z.number(),
 });
 
 const ZodUserSchema = z.object({
   userId: z.number(),
-  username: z.string().min(1).max(30),
-  password: z.string().min(1).max(100),
+  username: z.string(),
+  password: z.string(),
   fullName: z.object({
-    firstName: z.string().min(1).max(30),
-    lastName: z.string().min(1).max(30),
+    firstName: z.string(),
+    lastName: z.string(),
   }),
-  age: z.number().min(1),
-  email: z.string().email(),
+  age: z.number(),
+  email: z.string(),
   isActive: z.boolean(),
   hobbies: z.array(z.string()),
   orders: z.array(orderSchema).optional(),
   address: addressSchema,
-  isdeleted: z.boolean(),
+  isdeleted: z.boolean().optional(),
 });
 
 const UpdateaddressSchema = z.object({

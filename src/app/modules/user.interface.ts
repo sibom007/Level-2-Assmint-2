@@ -22,7 +22,7 @@ export type TUser = {
     city: string;
     country: string;
   };
-  isdeleted: boolean;
+  isdeleted?: boolean;
 };
 
 export type Torder = {
