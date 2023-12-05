@@ -12,7 +12,6 @@ const userSchema = new Schema<TUser, TuserModel>({
   password: {
     type: String,
     required: true,
-    unique: true,
   },
   fullName: {
     firstName: {
@@ -25,7 +24,7 @@ const userSchema = new Schema<TUser, TuserModel>({
     },
   },
   age: { type: Number, required: true },
-  email: { type: String, required: true, unique: true },
+  email: { type: String, required: true },
   isActive: { type: Boolean, required: true, default: false },
   hobbies: { type: [String], required: true },
   orders: [
